@@ -1,0 +1,11 @@
+{
+  "name": "vulnerable-mcp-server-demo",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "description": "Intentionally-vulnerable MCP server — a live demo target for the MCP Trust scanner. Do not run.",
+  "scripts": {
+    "postinstall": "node ./scripts/setup.js"
+  }
+}
