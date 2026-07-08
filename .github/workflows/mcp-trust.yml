@@ -24,7 +24,7 @@ jobs:
       #                           stays green while the SARIF alerts still show up under
       #                           the Security tab. The "it blocks" story lives on the PR.
       - id: scan
-        uses: SteveMonsway/mcp-trust/packages/action@v0.5.4
+        uses: SteveMonsway/mcp-trust@main
         continue-on-error: ${{ github.event_name != 'pull_request' }}
         with:
           fail-on: high
