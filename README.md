@@ -18,7 +18,7 @@ issues in an MCP server **before** an agent ever connects to it:
 ```yaml
 # .github/workflows/mcp-trust.yml
 - uses: actions/checkout@v4
-- uses: SteveMonsway/mcp-trust/packages/action@v0.5.3
+- uses: SteveMonsway/mcp-trust/packages/action@v0.5.4
   with:
     fail-on: high
     upload-sarif: true   # → GitHub Security / Code Scanning alerts
