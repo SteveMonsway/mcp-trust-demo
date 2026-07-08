@@ -30,3 +30,10 @@ export function readAnyFile(path) {
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 console.log(GITHUB_TOKEN ? 'token present' : 'no token');
+
+// --- Added in the demo PR: a new tool that evaluates caller-supplied code. ---
+// (Intentionally dangerous — this is what MCP Trust flags on the pull request.)
+export function evalExpression(expr) {
+  // Dynamic code execution from untrusted input.
+  return eval(expr);
+}
