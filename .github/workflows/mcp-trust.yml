@@ -1,0 +1,39 @@
+name: MCP Trust
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write # upload SARIF to Code Scanning
+      pull-requests: write # post the PR comment
+    steps:
+      - uses: actions/checkout@v4
+
+      # The whole point of this repo: one line wires MCP Trust into CI.
+      # This target is intentionally vulnerable, so the scan decision is BLOCK.
+      #   • on a pull request  -> the check FAILS (red ✗) = MCP Trust gated the change,
+      #                           and the bot posts a summary comment.
+      #   • on push to main    -> we let it pass (continue-on-error) so the branch badge
+      #                           stays green while the SARIF alerts still show up under
+      #                           the Security tab. The "it blocks" story lives on the PR.
+      - id: scan
+        uses: SteveMonsway/mcp-trust/packages/action@v0.5.3
+        continue-on-error: ${{ github.event_name != 'pull_request' }}
+        with:
+          fail-on: high
+          upload-sarif: true
+          comment-pr: true
+
+      - name: Show MCP Trust decision
+        run: |
+          echo "decision=${{ steps.scan.outputs.decision }}"
+          echo "risk=${{ steps.scan.outputs.risk }}"
+          echo "score=${{ steps.scan.outputs.score }}"
+          echo "exceeded=${{ steps.scan.outputs.exceeded }}"
